@@ -1,9 +1,16 @@
-import React from 'react'
-import Button from '@mui/material/Button';
+import { useSelector } from "react-redux"
+
+useSelector
 
 const App = () => {
+
+  const { tasks } = useSelector(state => state.task)
+
+
+
   return (
     <>
+      <pre><code>{JSON.stringify(tasks)}</code></pre>
     </>
   )
 }
