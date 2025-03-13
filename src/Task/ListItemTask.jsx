@@ -1,23 +1,34 @@
-import { Checkbox, FormControlLabel, ListItem, ListItemButton, ListItemIcon, ListItemText, Radio, TableCell, TableRow } from '@mui/material'
-import SendIcon from '@mui/icons-material/Send';
+// redux
 import { useDispatch } from 'react-redux';
-import { updateTaskStatus } from '../store/slices/taskSlice';
+import { setTask, updateTaskStatus } from '../store/slices/taskSlice';
+
+// material
+import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material'
 
 export const ListItemTask = ({ task }) => {
 
     const dispatch = useDispatch();
 
 
-    const handleChange = () => {
+    const handleChange = (e) => {
+        e.stopPropagation();
         dispatch(updateTaskStatus(task.id))
     };
 
+
+    const onClickSetTask = () => {
+        dispatch(setTask(task))
+
+    }
+
+
     return (
-        <TableRow >
+        <TableRow onClick={onClickSetTask} >
             <TableCell>
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={handleChange} checked={task.isCompleted} />
+
+                        <Checkbox onChange={(e) => handleChange(e)} checked={task.isCompleted} />
                     }
                     label={task.name}
 
