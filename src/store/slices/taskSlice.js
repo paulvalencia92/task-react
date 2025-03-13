@@ -7,24 +7,27 @@ const taskSlice = createSlice({
             {
                 id: 1,
                 name: 'Estudiar ingles',
-                description: '',
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus tenetur iusto nemo fugit quia alias maiores, voluptate quae, tempore sit distinctio, rerum sed soluta libero.',
                 isCompleted: false
             },
             {
-                id: 1,
+                id: 2,
                 name: 'Practicar react',
-                description: '',
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus tenetur iusto nemo fugit quia alias maiores, voluptate quae, tempore sit distinctio, rerum sed soluta libero.',
                 isCompleted: false
             }
         ]
     },
     reducers: {
-        getTasks: (state) => {
-            return state.tasks;
+        updateTaskStatus: (state, { payload }) => {
+            const task = state.tasks.find(task => task.id == payload);
+            if (task) {
+                task.isCompleted = !task.isCompleted;
+            }
         }
     }
 });
 
-export const { getTasks } = taskSlice.actions
+export const { updateTaskStatus } = taskSlice.actions
 
 export default taskSlice.reducer
