@@ -32,10 +32,13 @@ const taskSlice = createSlice({
         },
         toggleShowFormSave: (state, { payload }) => {
             state.showFormSave = payload;
+        },
+        addTask: (state, { payload }) => {
+            state.tasks.push(payload)
         }
     }
 });
 
-export const { updateTaskStatus, setTask, toggleShowFormSave } = taskSlice.actions
+export const { updateTaskStatus, setTask, toggleShowFormSave, addTask } = taskSlice.actions
 
 export default taskSlice.reducer
