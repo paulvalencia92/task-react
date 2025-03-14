@@ -1,38 +1,38 @@
 // redux
-import { useDispatch } from 'react-redux';
-import { setTask, updateTaskStatus } from '../store/slices/taskSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTask, toggleShowFormSave, updateTaskStatus } from '../store/slices/taskSlice';
 
 // material
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material'
 
-export const ListItemTask = ({ task }) => {
+export const ListItemTask = ({taskItem }) => {
 
     const dispatch = useDispatch();
-
-
-    const handleChange = (e) => {
-        e.stopPropagation();
-        dispatch(updateTaskStatus(task.id))
-    };
+    const { selectedTask } = useSelector(state => state.task);
 
 
     const onClickSetTask = () => {
-        dispatch(setTask(task))
-
+        dispatch(toggleShowFormSave(false));
+        dispatch(setTask(selectedTask?.id === taskItem.id ? null : taskItem));
     }
 
 
+    const changeStatus = (event) => {
+        event.stopPropagation();
+        dispatch(updateTaskStatus(taskItem.id))
+    };
+
+
+
     return (
-        <TableRow onClick={onClickSetTask} >
-            <TableCell>
+        <TableRow sx={{ background: selectedTask?.id === taskItem.id ? '#e7e7f8' : '', cursor: 'pointer' }}>
+            <TableCell onClick={onClickSetTask}>
                 <FormControlLabel
                     control={
-
-                        <Checkbox onChange={(e) => handleChange(e)} checked={task.isCompleted} />
+                        <Checkbox onClick={changeStatus} checked={taskItem.isCompleted} />
                     }
-                    label={task.name}
-
-                    sx={{ textDecoration: task.isCompleted ? "line-through" : "none" }}
+                    label={taskItem.name}
+                    sx={{ textDecoration: taskItem.isCompleted ? "line-through" : "none" }}
                 />
             </TableCell>
         </TableRow>

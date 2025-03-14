@@ -17,7 +17,8 @@ const taskSlice = createSlice({
                 isCompleted: false
             }
         ],
-        taskSelect: {}
+        selectedTask: null,
+        showFormSave: false
     },
     reducers: {
         updateTaskStatus: (state, { payload }) => {
@@ -27,11 +28,14 @@ const taskSlice = createSlice({
             }
         },
         setTask: (state, { payload }) => {
-            state.taskSelect = payload
+            state.selectedTask = payload
+        },
+        toggleShowFormSave: (state, { payload }) => {
+            state.showFormSave = payload;
         }
     }
 });
 
-export const { updateTaskStatus, setTask } = taskSlice.actions
+export const { updateTaskStatus, setTask, toggleShowFormSave } = taskSlice.actions
 
 export default taskSlice.reducer

@@ -1,19 +1,11 @@
-// redux
-import { useSelector } from 'react-redux';
-
 // material ui
-import { Table, TableHead, TableBody, TableRow, TableCell, Paper } from "@mui/material";
-
-// components
-import { ListItemTask } from './index'
+import { Table, TableHead, TableBody, TableRow, TableCell, Paper} from "@mui/material";
+import { useSelector } from 'react-redux'
 
 
+export const Detail = () => {
 
-
-export const ListTasks = () => {
-
-    const { tasks } = useSelector(state => state.task);
-
+    const { selectedTask } = useSelector(state => state.task);
 
     return (
         <Paper sx={{ margin: "20px auto", overflow: "hidden" }}>
@@ -22,17 +14,18 @@ export const ListTasks = () => {
                     <TableRow>
                         <TableCell colSpan={2}
                             sx={{ backgroundColor: 'primary.main', fontWeight: "bold", textAlign: "center", color: 'white' }}>
-                            Listado de Tareas
+                            {selectedTask.name}
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {tasks.map(task => (
-                        <ListItemTask key={task.id} taskItem={task} />
-                    ))}
+                    <TableRow>
+                        <TableCell colSpan={2}>{selectedTask.description}</TableCell>
+                    </TableRow>
+                  
                 </TableBody>
             </Table>
-        </Paper>
 
+        </Paper>
     )
 }
