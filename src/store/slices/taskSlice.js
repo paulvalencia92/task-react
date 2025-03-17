@@ -35,10 +35,20 @@ const taskSlice = createSlice({
         },
         addTask: (state, { payload }) => {
             state.tasks.push(payload)
-        }
+        },
+        updateSelectedTaskStatus: (state, { payload }) => {
+            
+            console.log({payload: payload});
+            console.log({selectedTaskID: state.selectedTask.id});
+            
+            if (state.selectedTask && state.selectedTask.id === payload) {
+                state.selectedTask.isCompleted = !state.selectedTask.isCompleted;
+            }
+        },
+
     }
 });
 
-export const { updateTaskStatus, setTask, toggleShowFormSave, addTask } = taskSlice.actions
+export const { updateTaskStatus, setTask, toggleShowFormSave, addTask, updateSelectedTaskStatus } = taskSlice.actions
 
 export default taskSlice.reducer

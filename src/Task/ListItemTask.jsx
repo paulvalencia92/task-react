@@ -1,17 +1,17 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setTask, toggleShowFormSave, updateTaskStatus } from '../store/slices/taskSlice';
+import { setTask, toggleShowFormSave, updateSelectedTaskStatus, updateTaskStatus } from '../store/slices/taskSlice';
 
 // material
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material'
 
-export const ListItemTask = ({taskItem }) => {
+export const ListItemTask = ({ taskItem }) => {
 
     const dispatch = useDispatch();
     const { selectedTask } = useSelector(state => state.task);
 
 
-    const onClickSetTask = () => {
+    const onClickSetTask = () => {  
         dispatch(toggleShowFormSave(false));
         dispatch(setTask(selectedTask?.id === taskItem.id ? null : taskItem));
     }
@@ -19,7 +19,9 @@ export const ListItemTask = ({taskItem }) => {
 
     const changeStatus = (event) => {
         event.stopPropagation();
-        dispatch(updateTaskStatus(taskItem.id))
+        dispatch(updateTaskStatus(taskItem?.id))
+        dispatch(updateSelectedTaskStatus(taskItem?.id))
+
     };
 
 
@@ -28,11 +30,19 @@ export const ListItemTask = ({taskItem }) => {
         <TableRow sx={{ background: selectedTask?.id === taskItem.id ? '#e7e7f8' : '', cursor: 'pointer' }}>
             <TableCell onClick={onClickSetTask}>
                 <FormControlLabel
+
                     control={
                         <Checkbox onClick={changeStatus} checked={taskItem.isCompleted} />
                     }
                     label={taskItem.name}
-                    sx={{ textDecoration: taskItem.isCompleted ? "line-through" : "none" }}
+                    onClick={(e) => e.stopPropagation()} //
+                    sx={{
+                        textDecoration: taskItem.isCompleted ? "line-through" : "none",
+                        transition: "color 0.2s",
+                        "&:hover": {
+                            color: "warning.dark"
+                        },
+                    }}
                 />
             </TableCell>
         </TableRow>
