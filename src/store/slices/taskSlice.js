@@ -25,7 +25,7 @@ const taskSlice = createSlice({
             description: '',
             isCompleted: false
         },
-        notification:  {
+        notification: {
             show: false,
             message: '',
             severity: ''
@@ -58,12 +58,16 @@ const taskSlice = createSlice({
         updateTask: (state, { payload }) => {
             const index = state.tasks.findIndex(task => task.id === payload.id);
             state.tasks.splice(index, 1, payload)
+        },
+        deleteTask: (state, { payload }) => {
+            const index = state.tasks.findIndex(task => task.id === payload.id);
+            state.tasks.splice(index, 1);
         }
 
 
     }
 });
 
-export const { updateTaskStatus, setSelectedTask, toggleShowFormSave, addTask, updateSelectedTaskStatus, setTaskForm, updateTask } = taskSlice.actions
+export const { updateTaskStatus, setSelectedTask, toggleShowFormSave, addTask, updateSelectedTaskStatus, setTaskForm, updateTask, deleteTask } = taskSlice.actions
 
 export default taskSlice.reducer

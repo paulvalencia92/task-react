@@ -35,7 +35,7 @@ export const ListItemTask = ({ taskItem }) => {
                         <Checkbox onClick={changeStatus} checked={taskItem.isCompleted} />
                     }
                     label={taskItem.name}
-                    onClick={(e) => e.stopPropagation()} //
+                    onClick={(e) => e.stopPropagation()} 
                     sx={{
                         textDecoration: taskItem.isCompleted ? "line-through" : "none",
                         transition: "color 0.2s",
