@@ -1,6 +1,6 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { updateSelectedTaskStatus, updateTaskStatus } from "../store/slices/taskSlice";
+import { setTaskForm, toggleShowFormSave, updateSelectedTaskStatus, updateTaskStatus } from "../store/slices/taskSlice";
 
 // material ui
 import { Table, TableHead, TableBody, TableRow, TableCell, Paper, Box, Button } from "@mui/material";
@@ -14,11 +14,15 @@ export const Detail = () => {
     const { selectedTask } = useSelector(state => state.task);
     const dispatch = useDispatch();
 
-    const onClickChangeStatus = () => {
+    const handleChangeStatus = () => {
         dispatch(updateTaskStatus(selectedTask.id))
         dispatch(updateSelectedTaskStatus(selectedTask.id))
+    }
 
-    } 
+    const handleEditTask = () => {
+        dispatch(setTaskForm(selectedTask));
+        dispatch(toggleShowFormSave(true));
+    }
 
     return (
         <Table>
@@ -39,7 +43,7 @@ export const Detail = () => {
                         <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 5, ml: 1 }}>
 
                             <Button
-                                onClick={onClickChangeStatus}
+                                onClick={handleChangeStatus}
                                 startIcon={<Done />}
                                 color="primary"
                                 variant="contained">
@@ -47,6 +51,7 @@ export const Detail = () => {
                             </Button>
 
                             <Button
+                                onClick={handleEditTask}
                                 startIcon={<Edit />}
                                 color="secondary"
                                 variant="contained">

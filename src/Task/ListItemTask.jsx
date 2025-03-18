@@ -1,6 +1,6 @@
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setTask, toggleShowFormSave, updateSelectedTaskStatus, updateTaskStatus } from '../store/slices/taskSlice';
+import { setSelectedTask, toggleShowFormSave, updateSelectedTaskStatus, updateTaskStatus } from '../store/slices/taskSlice';
 
 // material
 import { Checkbox, FormControlLabel, TableCell, TableRow } from '@mui/material'
@@ -13,7 +13,7 @@ export const ListItemTask = ({ taskItem }) => {
 
     const onClickSetTask = () => {  
         dispatch(toggleShowFormSave(false));
-        dispatch(setTask(selectedTask?.id === taskItem.id ? null : taskItem));
+        dispatch(setSelectedTask(selectedTask?.id === taskItem.id ? null : taskItem));
     }
 
 

@@ -18,7 +18,18 @@ const taskSlice = createSlice({
             }
         ],
         selectedTask: null,
-        showFormSave: false
+        showFormSave: false,
+        taskForm: {
+            id: null,
+            name: '',
+            description: '',
+            isCompleted: false
+        },
+        notification:  {
+            show: false,
+            message: '',
+            severity: ''
+        }
     },
     reducers: {
         updateTaskStatus: (state, { payload }) => {
@@ -27,7 +38,7 @@ const taskSlice = createSlice({
                 task.isCompleted = !task.isCompleted;
             }
         },
-        setTask: (state, { payload }) => {
+        setSelectedTask: (state, { payload }) => {
             state.selectedTask = payload
         },
         toggleShowFormSave: (state, { payload }) => {
@@ -37,18 +48,22 @@ const taskSlice = createSlice({
             state.tasks.push(payload)
         },
         updateSelectedTaskStatus: (state, { payload }) => {
-            
-            console.log({payload: payload});
-            console.log({selectedTaskID: state.selectedTask.id});
-            
             if (state.selectedTask && state.selectedTask.id === payload) {
                 state.selectedTask.isCompleted = !state.selectedTask.isCompleted;
             }
         },
+        setTaskForm: (state, { payload }) => {
+            state.taskForm = payload;
+        },
+        updateTask: (state, { payload }) => {
+            const index = state.tasks.findIndex(task => task.id === payload.id);
+            state.tasks.splice(index, 1, payload)
+        }
+
 
     }
 });
 
-export const { updateTaskStatus, setTask, toggleShowFormSave, addTask, updateSelectedTaskStatus } = taskSlice.actions
+export const { updateTaskStatus, setSelectedTask, toggleShowFormSave, addTask, updateSelectedTaskStatus, setTaskForm, updateTask } = taskSlice.actions
 
 export default taskSlice.reducer
